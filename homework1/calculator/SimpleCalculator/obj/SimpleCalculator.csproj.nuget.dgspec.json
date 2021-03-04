@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DotNetHomeWork\\homework1\\calculator\\calculator\\calculator.csproj": {}
+    "D:\\DotNetHomeWork\\homework1\\calculator\\SimpleCalculator\\SimpleCalculator.csproj": {}
   },
   "projects": {
-    "D:\\DotNetHomeWork\\homework1\\calculator\\calculator\\calculator.csproj": {
+    "D:\\DotNetHomeWork\\homework1\\calculator\\SimpleCalculator\\SimpleCalculator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DotNetHomeWork\\homework1\\calculator\\calculator\\calculator.csproj",
-        "projectName": "calculator",
-        "projectPath": "D:\\DotNetHomeWork\\homework1\\calculator\\calculator\\calculator.csproj",
+        "projectUniqueName": "D:\\DotNetHomeWork\\homework1\\calculator\\SimpleCalculator\\SimpleCalculator.csproj",
+        "projectName": "SimpleCalculator",
+        "projectPath": "D:\\DotNetHomeWork\\homework1\\calculator\\SimpleCalculator\\SimpleCalculator.csproj",
         "packagesPath": "C:\\Users\\韦弘杨01\\.nuget\\packages\\",
-        "outputPath": "D:\\DotNetHomeWork\\homework1\\calculator\\calculator\\obj\\",
+        "outputPath": "D:\\DotNetHomeWork\\homework1\\calculator\\SimpleCalculator\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Visual Stdio SDK\\NuGetPackages"
@@ -56,9 +56,6 @@
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
-            },
-            "Microsoft.WindowsDesktop.App.WindowsForms": {
-              "privateAssets": "none"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
