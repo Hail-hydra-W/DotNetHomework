@@ -1,0 +1,15 @@
+D:\DotNetHomeWork\exercise1\calculator\calculator\bin\Debug\netcoreapp3.1\calculator.exe
+D:\DotNetHomeWork\exercise1\calculator\calculator\bin\Debug\netcoreapp3.1\calculator.deps.json
+D:\DotNetHomeWork\exercise1\calculator\calculator\bin\Debug\netcoreapp3.1\calculator.runtimeconfig.json
+D:\DotNetHomeWork\exercise1\calculator\calculator\bin\Debug\netcoreapp3.1\calculator.runtimeconfig.dev.json
+D:\DotNetHomeWork\exercise1\calculator\calculator\bin\Debug\netcoreapp3.1\calculator.dll
+D:\DotNetHomeWork\exercise1\calculator\calculator\bin\Debug\netcoreapp3.1\calculator.pdb
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.csprojAssemblyReference.cache
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.Form1.resources
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.csproj.GenerateResource.cache
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.AssemblyInfo.cs
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.dll
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.pdb
+D:\DotNetHomeWork\exercise1\calculator\calculator\obj\Debug\netcoreapp3.1\calculator.genruntimeconfig.cache
