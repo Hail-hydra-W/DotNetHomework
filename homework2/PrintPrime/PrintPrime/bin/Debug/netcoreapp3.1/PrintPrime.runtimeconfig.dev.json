@@ -1,0 +1,9 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\韦弘杨01\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\韦弘杨01\\.nuget\\packages",
+      "D:\\Visual Stdio SDK\\NuGetPackages"
+    ]
+  }
+}

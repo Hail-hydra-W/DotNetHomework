@@ -1,0 +1,12 @@
+D:\DotNetHomeWork\homework2\SortArray\bin\Debug\netcoreapp3.1\SortArray.exe
+D:\DotNetHomeWork\homework2\SortArray\bin\Debug\netcoreapp3.1\SortArray.deps.json
+D:\DotNetHomeWork\homework2\SortArray\bin\Debug\netcoreapp3.1\SortArray.runtimeconfig.json
+D:\DotNetHomeWork\homework2\SortArray\bin\Debug\netcoreapp3.1\SortArray.runtimeconfig.dev.json
+D:\DotNetHomeWork\homework2\SortArray\bin\Debug\netcoreapp3.1\SortArray.dll
+D:\DotNetHomeWork\homework2\SortArray\bin\Debug\netcoreapp3.1\SortArray.pdb
+D:\DotNetHomeWork\homework2\SortArray\obj\Debug\netcoreapp3.1\SortArray.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework2\SortArray\obj\Debug\netcoreapp3.1\SortArray.AssemblyInfo.cs
+D:\DotNetHomeWork\homework2\SortArray\obj\Debug\netcoreapp3.1\SortArray.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\homework2\SortArray\obj\Debug\netcoreapp3.1\SortArray.dll
+D:\DotNetHomeWork\homework2\SortArray\obj\Debug\netcoreapp3.1\SortArray.pdb
+D:\DotNetHomeWork\homework2\SortArray\obj\Debug\netcoreapp3.1\SortArray.genruntimeconfig.cache

@@ -1,0 +1,13 @@
+D:\DotNetHomeWork\homework2\SieveOfErato\obj\Debug\netcoreapp3.1\SieveOfErato.csprojAssemblyReference.cache
+D:\DotNetHomeWork\homework2\SieveOfErato\obj\Debug\netcoreapp3.1\SieveOfErato.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework2\SieveOfErato\obj\Debug\netcoreapp3.1\SieveOfErato.AssemblyInfo.cs
+D:\DotNetHomeWork\homework2\SieveOfErato\obj\Debug\netcoreapp3.1\SieveOfErato.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\homework2\SieveOfErato\bin\Debug\netcoreapp3.1\SieveOfErato.exe
+D:\DotNetHomeWork\homework2\SieveOfErato\bin\Debug\netcoreapp3.1\SieveOfErato.deps.json
+D:\DotNetHomeWork\homework2\SieveOfErato\bin\Debug\netcoreapp3.1\SieveOfErato.runtimeconfig.json
+D:\DotNetHomeWork\homework2\SieveOfErato\bin\Debug\netcoreapp3.1\SieveOfErato.runtimeconfig.dev.json
+D:\DotNetHomeWork\homework2\SieveOfErato\bin\Debug\netcoreapp3.1\SieveOfErato.dll
+D:\DotNetHomeWork\homework2\SieveOfErato\bin\Debug\netcoreapp3.1\SieveOfErato.pdb
+D:\DotNetHomeWork\homework2\SieveOfErato\obj\Debug\netcoreapp3.1\SieveOfErato.dll
+D:\DotNetHomeWork\homework2\SieveOfErato\obj\Debug\netcoreapp3.1\SieveOfErato.pdb
+D:\DotNetHomeWork\homework2\SieveOfErato\obj\Debug\netcoreapp3.1\SieveOfErato.genruntimeconfig.cache

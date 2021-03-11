@@ -1,0 +1,13 @@
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\bin\Debug\netcoreapp3.1\PrintPrime.exe
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\bin\Debug\netcoreapp3.1\PrintPrime.deps.json
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\bin\Debug\netcoreapp3.1\PrintPrime.runtimeconfig.json
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\bin\Debug\netcoreapp3.1\PrintPrime.runtimeconfig.dev.json
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\bin\Debug\netcoreapp3.1\PrintPrime.dll
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\bin\Debug\netcoreapp3.1\PrintPrime.pdb
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\obj\Debug\netcoreapp3.1\PrintPrime.csprojAssemblyReference.cache
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\obj\Debug\netcoreapp3.1\PrintPrime.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\obj\Debug\netcoreapp3.1\PrintPrime.AssemblyInfo.cs
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\obj\Debug\netcoreapp3.1\PrintPrime.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\obj\Debug\netcoreapp3.1\PrintPrime.dll
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\obj\Debug\netcoreapp3.1\PrintPrime.pdb
+D:\DotNetHomeWork\homework2\homework2\PrintPrime\obj\Debug\netcoreapp3.1\PrintPrime.genruntimeconfig.cache

@@ -1,0 +1,4 @@
+D:\DotNetHomeWork\homework2\Toeplitz\obj\Debug\netcoreapp3.1\Toeplitz.csprojAssemblyReference.cache
+D:\DotNetHomeWork\homework2\Toeplitz\obj\Debug\netcoreapp3.1\Toeplitz.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework2\Toeplitz\obj\Debug\netcoreapp3.1\Toeplitz.AssemblyInfo.cs
+D:\DotNetHomeWork\homework2\Toeplitz\obj\Debug\netcoreapp3.1\Toeplitz.csproj.CoreCompileInputs.cache
