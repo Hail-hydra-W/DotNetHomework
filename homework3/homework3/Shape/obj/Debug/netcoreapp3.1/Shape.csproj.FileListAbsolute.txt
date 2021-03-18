@@ -1,0 +1,13 @@
+D:\DotNetHomeWork\homework3\homework3\Shape\bin\Debug\netcoreapp3.1\Shape.exe
+D:\DotNetHomeWork\homework3\homework3\Shape\bin\Debug\netcoreapp3.1\Shape.deps.json
+D:\DotNetHomeWork\homework3\homework3\Shape\bin\Debug\netcoreapp3.1\Shape.runtimeconfig.json
+D:\DotNetHomeWork\homework3\homework3\Shape\bin\Debug\netcoreapp3.1\Shape.runtimeconfig.dev.json
+D:\DotNetHomeWork\homework3\homework3\Shape\bin\Debug\netcoreapp3.1\Shape.dll
+D:\DotNetHomeWork\homework3\homework3\Shape\bin\Debug\netcoreapp3.1\Shape.pdb
+D:\DotNetHomeWork\homework3\homework3\Shape\obj\Debug\netcoreapp3.1\Shape.csprojAssemblyReference.cache
+D:\DotNetHomeWork\homework3\homework3\Shape\obj\Debug\netcoreapp3.1\Shape.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework3\homework3\Shape\obj\Debug\netcoreapp3.1\Shape.AssemblyInfo.cs
+D:\DotNetHomeWork\homework3\homework3\Shape\obj\Debug\netcoreapp3.1\Shape.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\homework3\homework3\Shape\obj\Debug\netcoreapp3.1\Shape.dll
+D:\DotNetHomeWork\homework3\homework3\Shape\obj\Debug\netcoreapp3.1\Shape.pdb
+D:\DotNetHomeWork\homework3\homework3\Shape\obj\Debug\netcoreapp3.1\Shape.genruntimeconfig.cache
