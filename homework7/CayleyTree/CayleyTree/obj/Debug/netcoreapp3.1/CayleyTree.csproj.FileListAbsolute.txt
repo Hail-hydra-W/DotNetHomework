@@ -1,0 +1,15 @@
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\bin\Debug\netcoreapp3.1\CayleyTree.exe
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\bin\Debug\netcoreapp3.1\CayleyTree.deps.json
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\bin\Debug\netcoreapp3.1\CayleyTree.runtimeconfig.json
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\bin\Debug\netcoreapp3.1\CayleyTree.runtimeconfig.dev.json
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\bin\Debug\netcoreapp3.1\CayleyTree.dll
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\bin\Debug\netcoreapp3.1\CayleyTree.pdb
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.csprojAssemblyReference.cache
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.Form1.resources
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.csproj.GenerateResource.cache
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.AssemblyInfo.cs
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.dll
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.pdb
+D:\DotNetHomeWork\homework7\CayleyTree\CayleyTree\obj\Debug\netcoreapp3.1\CayleyTree.genruntimeconfig.cache
