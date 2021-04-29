@@ -1,0 +1,13 @@
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\netcoreapp3.1\InternetWorm.exe
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\netcoreapp3.1\InternetWorm.deps.json
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\netcoreapp3.1\InternetWorm.runtimeconfig.json
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\netcoreapp3.1\InternetWorm.runtimeconfig.dev.json
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\netcoreapp3.1\InternetWorm.dll
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\netcoreapp3.1\InternetWorm.pdb
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\netcoreapp3.1\InternetWorm.csprojAssemblyReference.cache
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\netcoreapp3.1\InternetWorm.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\netcoreapp3.1\InternetWorm.AssemblyInfo.cs
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\netcoreapp3.1\InternetWorm.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\netcoreapp3.1\InternetWorm.dll
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\netcoreapp3.1\InternetWorm.pdb
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\netcoreapp3.1\InternetWorm.genruntimeconfig.cache
