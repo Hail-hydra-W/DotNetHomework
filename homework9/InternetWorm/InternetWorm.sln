@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetWorm", "InternetWorm\InternetWorm.csproj", "{678CC86F-356E-4187-A63A-661C9658B28F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetWorm", "InternetWorm\InternetWorm.csproj", "{18344C3D-83C8-483E-BCA1-3967AB150989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{678CC86F-356E-4187-A63A-661C9658B28F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{678CC86F-356E-4187-A63A-661C9658B28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{678CC86F-356E-4187-A63A-661C9658B28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{678CC86F-356E-4187-A63A-661C9658B28F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18344C3D-83C8-483E-BCA1-3967AB150989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18344C3D-83C8-483E-BCA1-3967AB150989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18344C3D-83C8-483E-BCA1-3967AB150989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18344C3D-83C8-483E-BCA1-3967AB150989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5EFF640A-A877-4BEE-A2A2-DB2A2A3AAF21}
+		SolutionGuid = {1BAA9012-6C72-4525-83F0-6963E20025E7}
 	EndGlobalSection
 EndGlobal

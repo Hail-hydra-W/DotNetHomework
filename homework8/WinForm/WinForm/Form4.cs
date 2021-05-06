@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace WinForm
 {
-    public partial class Form3 : Form
+    public partial class Form4 : Form
     {
         public string id { set; get; }
         public string customer_name { set; get; }
@@ -18,30 +18,27 @@ namespace WinForm
         public string customer_id { set; get; }
         public string goods_id { set; get; }
         public orderWinForm.OrderService service = new orderWinForm.OrderService();
-        public int op { set; get; }
-
-        public Form3()
+        public Form4()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void 删除订单_Click(object sender, EventArgs e)
         {
             int id_int = Convert.ToInt32(id);
             orderWinForm.Customer c = new orderWinForm.Customer(Convert.ToUInt32(customer_id), customer_name);
             orderWinForm.Goods goods = new orderWinForm.Goods(Convert.ToInt32(goods_id), goods_name, Convert.ToDouble(price));
             orderWinForm.OrderDetail de = new orderWinForm.OrderDetail(goods, Convert.ToUInt32(amount));
-            orderWinForm.Order o = service.GetById(id_int);
-            var d = o.Details;
-            foreach (var i in d)
+            if (service.GetById(id_int) == null)
             {
-                if (i.Goods.Id == Convert.ToInt32(goods_id))
-                {
-                    i.Amount = Convert.ToUInt32(amount);
-                    i.Goods.Price = Convert.ToDouble(price);
-                }
+                orderWinForm.Order o = new orderWinForm.Order(id_int, c);
+                service.AddOrder(o); o.AddDetails(de);
             }
-            MessageBox.Show("修改成功");
+            else
+            {
+                service.GetById(id_int).AddDetails(de);
+            }
+            MessageBox.Show("删除成功");
             this.Close();
         }
 
@@ -50,19 +47,19 @@ namespace WinForm
             id = textBox4.Text;
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)
+        private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            customer_name = textBox6.Text;
+            customer_name = textBox3.Text;
         }
 
-        private void textBox8_TextChanged(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            goods_name = textBox8.Text;
+            goods_name = textBox1.Text;
         }
 
-        private void textBox7_TextChanged(object sender, EventArgs e)
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            amount = textBox7.Text;
+            amount = textBox2.Text;
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)

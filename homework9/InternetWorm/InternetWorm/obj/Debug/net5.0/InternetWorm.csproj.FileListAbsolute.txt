@@ -1,0 +1,16 @@
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.csprojAssemblyReference.cache
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.GeneratedMSBuildEditorConfig.editorconfig
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.AssemblyInfoInputs.cache
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.AssemblyInfo.cs
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.csproj.CoreCompileInputs.cache
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\net5.0\InternetWorm.exe
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\net5.0\InternetWorm.deps.json
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\net5.0\InternetWorm.runtimeconfig.json
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\net5.0\InternetWorm.runtimeconfig.dev.json
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\net5.0\InternetWorm.dll
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\net5.0\ref\InternetWorm.dll
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\bin\Debug\net5.0\InternetWorm.pdb
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.dll
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\ref\InternetWorm.dll
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.pdb
+D:\DotNetHomeWork\homework9\InternetWorm\InternetWorm\obj\Debug\net5.0\InternetWorm.genruntimeconfig.cache

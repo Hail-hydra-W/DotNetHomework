@@ -15,3 +15,4 @@ D:\DotNetHomeWork\homework8\WinForm\WinForm\obj\Debug\netcoreapp3.1\WinForm.cspr
 D:\DotNetHomeWork\homework8\WinForm\WinForm\obj\Debug\netcoreapp3.1\WinForm.dll
 D:\DotNetHomeWork\homework8\WinForm\WinForm\obj\Debug\netcoreapp3.1\WinForm.pdb
 D:\DotNetHomeWork\homework8\WinForm\WinForm\obj\Debug\netcoreapp3.1\WinForm.genruntimeconfig.cache
+D:\DotNetHomeWork\homework8\WinForm\WinForm\obj\Debug\netcoreapp3.1\WinForm.Form4.resources

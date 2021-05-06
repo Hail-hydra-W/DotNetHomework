@@ -13,16 +13,14 @@ namespace InternetWorm
 {
     class SimpleCrawler
     {
-        private Hashtable urls = new Hashtable();
-        private int count = 0;
+        private readonly Hashtable urls = new Hashtable();
+        private int count;
         private readonly string startUrl;
-        static void Main(string[] args)
+
+        public SimpleCrawler(string url)
         {
-            SimpleCrawler myCrawler = new SimpleCrawler();
-            string startUrl = "http://www.cnblogs.com/dstang2000/";
-            if (args.Length >= 1) startUrl = args[0];
-            myCrawler.urls.Add(startUrl, false);//加入初始页面
-            new Thread(myCrawler.Crawl).Start();//开始爬行
+            startUrl = url;
+            urls.Add(startUrl, false);
         }
 
         private void Crawl()
@@ -39,24 +37,25 @@ namespace InternetWorm
 
                 if (current == null || count > 10) break;
                 Console.WriteLine("爬行" + current + "页面!");
-                string html = DownLoad(current); // 下载
+                var task = DownLoad(current); // 下载
                 urls[current] = true;
                 count++;
+                var html = task.Result;
                 Parse(html);//解析,并加入新的链接
-                Console.WriteLine("爬行结束");
             }
+            Console.WriteLine("爬行结束");
         }
 
-        public string DownLoad(string url)
+        public async Task<string> DownLoad(string url)
         {
             try
             {
-                WebClient webClient = new WebClient();
-                webClient.Encoding = Encoding.UTF8;
-                string html = webClient.DownloadString(url);
+                var webClient = new WebClient { Encoding = Encoding.UTF8 };
+                var task = webClient.DownloadStringTaskAsync(url);
                 string fileName = count.ToString();
-                File.WriteAllText(fileName, html, Encoding.UTF8);
-                return html;
+                var result = await task;
+                File.WriteAllText(fileName, result, Encoding.UTF8);
+                return result;
             }
             catch (Exception ex)
             {
@@ -68,7 +67,7 @@ namespace InternetWorm
         private void Parse(string html)
         {
             string strRef = @"(href|HREF)[]*=[]*[""'][^""'#>]+(jsp|html|aspx)[""']";
-            MatchCollection matches = new Regex(strRef).Matches(html);
+            var matches = new Regex(strRef).Matches(html);
             foreach (Match match in matches)
             {
                 strRef = match.Value.Substring(match.Value.IndexOf('=') + 1)
@@ -77,6 +76,12 @@ namespace InternetWorm
                 if (!strRef.StartsWith(startUrl)) continue;
                 if (urls[strRef] == null) urls[strRef] = false;
             }
+        }
+
+        static void Main(string[] args)
+        {
+            SimpleCrawler myCrawler = new SimpleCrawler(@"https://www.runoob.com/");
+            new Thread(myCrawler.Crawl).Start();
         }
     }
 }
