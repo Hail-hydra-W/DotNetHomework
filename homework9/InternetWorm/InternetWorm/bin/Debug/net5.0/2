@@ -1,0 +1,570 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-crossorigin" />
+    <meta name="description" content="本来没想着要写这篇博客，但是在实操过程中，一个是被网络问题搞炸了心态（真心感觉网络能把人搞疯，别人下个包、下个镜像几秒钟搞定，我看着我的几KB小水管真是有苦说不出），另一个就是这里面坑还是有一些的，写" />
+    <meta property="og:description" content="本来没想着要写这篇博客，但是在实操过程中，一个是被网络问题搞炸了心态（真心感觉网络能把人搞疯，别人下个包、下个镜像几秒钟搞定，我看着我的几KB小水管真是有苦说不出），另一个就是这里面坑还是有一些的，写" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Jenkins + Docker + ASP.NET Core自动化部署 - xiaoxiaotank - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=zS6-e1bxywlu3kpHvpr1J6MySwya3ztFtEnS7RYQ0Fk" />
+    
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/xiaoxiaotank/custom.css?v=pijfh1JKUaSYlEhu6xAR3VlMqp0=" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-SimpleMemory-mobile.min.css" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/xiaoxiaotank/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/xiaoxiaotank/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/xiaoxiaotank/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 519390;
+        var currentBlogApp = 'xiaoxiaotank';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2021-05-13 09:20';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=2Mic1VLeHXarpdzASbXqFMIMVLEBiWXNO5yiTHUcmhw"></script>
+    
+    
+    
+</head>
+<body class="no-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding"><a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo.svg?v=R9M0WmLAIPVydmdzE2keuvnjl-bPR7_35oHqtiBzGsM" alt="博客园Logo" /></a></li>
+                <li><a href="/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3" />
+                        <button type="submit" id="zzk_search_button">
+                            <img src="/images/aggsite/search.svg" alt="搜索" />
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="/images/aggsite/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="/images/aggsite/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="/images/aggsite/message.svg?v=J0WS2P2iPgaIVgXxcAhliw4AFZIpaTWxtdoNAv9eiCA" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="/images/aggsite/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/xiaoxiaotank/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/xiaoxiaotank/">xiaoxiaotank</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/xiaoxiaotank/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/xiaoxiaotank">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/xiaoxiaotank/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/xiaoxiaotank/p/14762665.html">
+    <span>Jenkins + Docker + ASP.NET Core自动化部署</span>
+    
+
+
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<blockquote>
+<p>本来没想着要写这篇博客，但是在实操过程中，一个是被网络问题搞炸了心态（真心感觉网络能把人搞疯，别人下个包、下个镜像几秒钟搞定，我看着我的几KB小水管真是有苦说不出），另一个就是这里面坑还是有一些的，写出来也是为了让大家避免重复踩坑</p>
+</blockquote>
+<p>几个注意点：</p>
+<ul>
+<li>下方shell命令绝大部分都需要管理员权限，所以如果你使用的用户不是root，则都要加上sudo</li>
+<li>对于较复杂的命令我都提供了注释版和无注释版，无注释版是为了让你复制起来方便</li>
+</ul>
+<h4 id="准备工作">准备工作</h4>
+<ul>
+<li>CentOS 7.x</li>
+<li>Docker</li>
+<li>Jenkins</li>
+<li>一份支持 docker 的 ASP.NET Core 应用程序代码，可以直接用我的：<a href="https://github.com/xiaoxiaotank/MyAspNetCoreApp" target="_blank">https://github.com/xiaoxiaotank/MyAspNetCoreApp</a></li>
+</ul>
+<h2 id="安装docker">安装Docker</h2>
+<blockquote>
+<p>官方文档：<a href="https://docs.docker.com/engine/install/centos/" target="_blank">https://docs.docker.com/engine/install/centos/</a></p>
+</blockquote>
+<ol>
+<li>如果你选择的是一个新系统，则建议首先更新 yum 和系统内核</li>
+</ol>
+<pre><code>yum update
+</code></pre>
+<ol start="2">
+<li>确保卸载旧版docker
+<ul>
+<li>/var/lib/docker/ 下的镜像、容器、卷和网络都会保留</li>
+<li>旧版本中Docker被命名为<code>docker</code>或<code>docker-engine</code>，现在被命名为<code>docker-ce</code></li>
+</ul>
+</li>
+</ol>
+<pre><code>yum remove docker \
+           docker-client \
+           docker-client-latest \
+           docker-common \
+           docker-latest \
+           docker-latest-logrotate \
+           docker-logrotate \
+           docker-engine
+</code></pre>
+<ol start="3">
+<li>安装 yum-utils（其提供了yum-config-manager，下方要用到）</li>
+</ol>
+<pre><code>yum install -y yum-utils
+</code></pre>
+<ol start="4">
+<li>配置 yum 阿里云 docker 仓库
+<ul>
+<li>docker官方仓库： <a href="https://download.docker.com/linux/centos/docker-ce.repo" target="_blank">https://download.docker.com/linux/centos/docker-ce.repo</a></li>
+</ul>
+</li>
+</ol>
+<pre><code>yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</code></pre>
+<ol start="5">
+<li>安装 docker</li>
+</ol>
+<pre><code>yum install -y docker-ce docker-ce-cli containerd.io
+</code></pre>
+<ol start="6">
+<li>配置 docker 镜像加速器
+<ul>
+<li>获取加速器地址：<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors" target="_blank">https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</a></li>
+</ul>
+</li>
+</ol>
+<pre><code>sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'
+{
+  "registry-mirrors": ["这里填入你的加速器url"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre>
+<ol start="7">
+<li>查看 docker 信息</li>
+</ol>
+<pre><code>docker info
+</code></pre>
+<ol start="8">
+<li>hello-world 测试</li>
+</ol>
+<pre><code>docker run hello-world
+</code></pre>
+<h2 id="安装并初始化jenkins">安装并初始化Jenkins</h2>
+<blockquote>
+<p>官方文档：<a href="https://www.jenkins.io/doc/book/installing/docker/" target="_blank">https://www.jenkins.io/doc/book/installing/docker/</a></p>
+</blockquote>
+<p><strong>先说一下</strong>：官方文档中使用了镜像<code>docker:dind</code>来执行docker命令和运行程序容器，我感觉完全没啥必要，而且引入这玩意会带来很多额外的问题，所以我没用它。</p>
+<p>如果你想了解dind，请访问<a href="https://hub.docker.com/_/docker" target="_blank">这里</a>和这篇<a href="https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">博客</a></p>
+<h3 id="安装jenkins">安装Jenkins</h3>
+<ol>
+<li>创建Dockerfile文件</li>
+</ol>
+<pre><code>vim Dockerfile
+</code></pre>
+<ol start="2">
+<li>在Dockerfile文件中填入以下内容
+<ul>
+<li>Tag参考：<a href="https://hub.docker.com/r/jenkins/jenkins" target="_blank">https://hub.docker.com/r/jenkins/jenkins</a></li>
+<li>注意：不要使用过时的镜像 <s>jenkins</s>，而应该使用镜像 jenkins/jenkins</li>
+</ul>
+</li>
+</ol>
+<pre><code>FROM jenkins/jenkins:lts-jdk11
+USER root
+RUN apt-get update &amp;&amp; apt-get install -y apt-transport-https \
+       ca-certificates curl gnupg2 \
+       software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/debian \
+       $(lsb_release -cs) stable"
+
+# 安装 docker-ce-cli 才能在 jenkins 中发送 docker 命令到 docker daemon
+RUN apt-get update &amp;&amp; apt-get install -y docker-ce-cli
+</code></pre>
+<ol start="3">
+<li>构建镜像</li>
+</ol>
+<pre><code>docker build . -t myjenkins
+</code></pre>
+<p>如果出现警告：[Warning] IPv4 forwarding is disabled. Networking will not work.</p>
+<p>其实就是说你的linux没有开启 Ipv4 数据包转发功能</p>
+<p>可以先尝试重启docker解决</p>
+<pre><code>systemctl restart docker
+</code></pre>
+<p>如果无效，则</p>
+<pre><code># 1. 打开 sysctl.conf
+vim /etc/sysctl.conf
+
+# 2.添加下面一行
+net.ipv4.ip_forward=1
+
+# 3.重启 network 和 docker
+systemctl restart network &amp;&amp; systemctl restart docker
+</code></pre>
+<ol start="4">
+<li>运行Jenkins</li>
+</ol>
+<ul>
+<li>注释版</li>
+</ul>
+<pre><code>docker run \
+  --name jenkins \                                      # 给容器起个名字，叫做 jenkins
+  --detach \                                            # 以后台分离模式运行
+  --publish 8080:8080 \                                 # host 8080端口映射容器8080端口
+  --publish 50000:50000 \                               # host 50000端口映射容器50000端口
+  --volume jenkins-data:/var/jenkins_home \             # 卷 jenkins-data 映射容器路径/var/jenkins_home，这样就可以在host上直接修改jenkins配置了
+  --volume /var/run/docker.sock:/var/run/docker.sock \  # host 上的docker sock映射容器的docker sock，这样容器内的docker命令都会发送到host上的docker中来执行
+  myjenkins                                             # 使用刚刚构建的镜像 myjenkins 来运行容器
+</code></pre>
+<ul>
+<li>无注释版</li>
+</ul>
+<pre><code>docker run \
+  --name jenkins \
+  --detach \
+  --publish 8080:8080 \
+  --publish 50000:50000 \
+  --volume jenkins-data:/var/jenkins_home \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  myjenkins
+</code></pre>
+<ol start="5">
+<li>更换Jenkins插件源</li>
+</ol>
+<p>前面我们将容器内的路径 <code>/var/jenkins_home</code> 映射到了volume <code>jenkins-data</code>，而所有的docker volume 都存放在目录 /var/lib/docker/volumes/下</p>
+<ul>
+<li>打开hudson.model.UpdateCenter.xml</li>
+</ul>
+<pre><code>vim /var/lib/docker/volumes/jenkins-data/_data/hudson.model.UpdateCenter.xml
+</code></pre>
+<ul>
+<li>将文件中的url改为清华大学官方镜像：</li>
+</ul>
+<pre><code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+</code></pre>
+<ul>
+<li>即：</li>
+</ul>
+<pre><code>&lt;?xml version='1.1' encoding='UTF-8'?&gt;
+&lt;sites&gt;
+  &lt;site&gt;
+    &lt;id&gt;default&lt;/id&gt;
+    &lt;!--原 url： https://updates.jenkins.io/update-center.json --&gt;
+    &lt;url&gt;https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json&lt;/url&gt;
+  &lt;/site&gt;
+&lt;/sites&gt;
+</code></pre>
+<ul>
+<li>重启 Jenkins：</li>
+</ul>
+<pre><code>docker restart jenkins
+</code></pre>
+<h3 id="初始化jenkins">初始化Jenkins</h3>
+<ol>
+<li>访问：http://&lt;host-ip&gt;:8080</li>
+<li>输入管理员初始密码
+<ul>
+<li>查看管理员初始密码：</li>
+</ul>
+<pre><code>cat /var/lib/docker/volumes/jenkins-data/_data/secrets/initialAdminPassword
+</code></pre>
+</li>
+</ol>
+<p><img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235854916-1545858361.png" alt="" loading="lazy"></p>
+<ol start="3">
+<li>
+<p>选择“安装推荐的插件”<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235908150-1093625385.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>经过漫长的等待之后，由于网络环境、依赖项的问题，很可能出现某些插件安装失败，不过咱们先点击“继续”，进去再修复<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235917856-1914258068.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>接下来创建一个自己的管理员帐号，确认jenkins url<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235924355-34086278.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>进来后，jenkins的主页面就长这个样子<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235931592-1062375938.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>我们先来修复一下安装失败的插件<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235941189-620370451.png" alt="" loading="lazy"></p>
+</li>
+</ol>
+<p><img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235946909-1507177426.png" alt="" loading="lazy"></p>
+<ol start="8">
+<li>
+<p>点击左侧菜单栏“Manage Jenkins”，将jenkins升级为最新版<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210512235954517-806524861.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>在 Update Center 页面时记得勾选最下方的“安装完成后重启Jenkins(空闲时)”</p>
+</li>
+</ol>
+<h2 id="自动化配置和部署">自动化配置和部署</h2>
+<ol>
+<li>
+<p>点击jenkins页面左侧菜单第一个“新建任务”，填入任务名，选择自由风格<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210513000003552-354427654.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>填入如下配置信息，并保存<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210513000011934-1350618980.png" alt="" loading="lazy"><br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210513000016979-115841453.png" alt="" loading="lazy"><br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210513000021945-717704286.png" alt="" loading="lazy"></p>
+</li>
+</ol>
+<p>shell命令如下：</p>
+<pre><code>image_tag=`date +%Y%m%d%H%M%S`;
+echo $image_tag;
+
+# build镜像并且打上tag
+docker build -t myapp:$image_tag .;
+docker images;
+
+# 停止并删除旧版 myapp container
+CID=$(docker ps | grep "myapp" | awk '{print $1}')
+echo $CID
+if [ "$CID" != "" ];then
+  docker stop $CID
+  docker rm $CID
+fi
+
+# 把刚刚build出来的镜像跑起来
+docker run -p 5000:80 --name myapp -d myapp:$image_tag;
+docker ps -a;
+docker logs myapp;
+</code></pre>
+<ol start="3">
+<li>
+<p>点击左侧菜单“立即构建”，来部署我们的AspNetCoreApp，并查看“控制台输出”，当最终出现“Finished: SUCCESS”时表示部署成功<br>
+<img src="https://img2020.cnblogs.com/blog/1010000/202105/1010000-20210513000135817-655275005.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>访问：http://&lt;host-ip&gt;:5000/hello   （注意加上hello）</p>
+</li>
+</ol>
+<pre><code>2021-05-12T15:28:43.9032704+00:00: Hello !
+</code></pre>
+<ol start="5">
+<li>此时查看docker中正在运行的容器：</li>
+</ol>
+<pre><code>CONTAINER ID   IMAGE                  COMMAND                  CREATED             STATUS             PORTS                                                                                      NAMES
+e167a135f7a0   myapp:20210512152453   "dotnet MyAspNetCore…"   2 minutes ago       Up 2 minutes       0.0.0.0:5000-&gt;80/tcp, :::5000-&gt;80/tcp                                                      myapp
+e83a2570c334   myjenkins              "/sbin/tini -- /usr/…"   About an hour ago   Up About an hour   0.0.0.0:8080-&gt;8080/tcp, :::8080-&gt;8080/tcp, 0.0.0.0:50000-&gt;50000/tcp, :::50000-&gt;50000/tcp   jenkins
+</code></pre>
+<h2 id="注意事项">注意事项</h2>
+<h4 id="1-关于-jenkins-blueocean-等插件下载安装">1. 关于 jenkins blueocean 等插件下载安装</h4>
+<p>如果jenkins想要安装插件 bluocean 等， 不要学官网将安装命令放放在Dockerfile中，即使加了参数<code>--jenkins-update-center</code>来指定加速源，也不建议这样做。因为我刚开始也想着尽量自动化，可是因为网络问题，导致插件一直下载安装失败，从而导致镜像一直构建失败，白白浪费了我两三个小时（真的很痛苦）</p>
+<p>另外，你也可以在安装jenkins时，直接使用镜像 jenkinsci/blueocean ，该镜像包含了 blueocean 的相关插件。</p>
+<h4 id="2-关于-myapp-容器-端口映射-5000--80">2. 关于 myapp 容器 端口映射 5000 : 80</h4>
+<p>因为我的 Dockerfile 文件中向外暴露的端口是80，所以我用host的端口5000映射了容器端口80，这个地方要按照你的实际情况来做出更改。</p>
+<h4 id="3-如果你对-dind-docker-in-docker-感兴趣">3. 如果你对 dind (docker in docker) 感兴趣</h4>
+<p>如果你想了解dind，请访问<a href="https://hub.docker.com/_/docker" target="_blank">这里</a>和这篇<a href="https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/" target="_blank">博客</a></p>
+
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2021-05-13 09:20</span>&nbsp;
+<a href="https://www.cnblogs.com/xiaoxiaotank/">xiaoxiaotank</a>&nbsp;
+阅读(<span id="post_view_count">1490</span>)&nbsp;
+评论(<span id="post_comment_count">9</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=14762665" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(14762665);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="https://common.cnblogs.com/highlight/10.3.1/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 519390, cb_blogApp = 'xiaoxiaotank', cb_blogUserGuid = '5f6da745-9b63-e611-9fc1-ac853d9f53cc';
+    var cb_entryId = 14762665, cb_entryCreatedDate = '2021-05-13 09:20', cb_postType = 1;
+    updatePostStats(
+        [cb_entryId],
+        function(id, count) { $("#post_view_count").text(count) },
+        function(id, count) { $("#post_comment_count").text(count) })
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+</script>
+<a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="cnblogs_c2" class="under-post-card">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+       var commentManager = new blogCommentManager();
+       commentManager.renderComments(0);
+       fixPostBody();
+       deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);       deliverT2();
+       deliverC1C2();
+       loadNewsAndKb();
+       loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);       LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+       GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+       loadOptUnderPost();
+       GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2021 xiaoxiaotank
+<br /><span id="poweredby">Powered by .NET 5.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8L-rpLgFVEJMgssCVvNUAjvEhHysi4asWajUF1jF-KRJbJLhM4WPEnyW0ypuQ875CVD7WxyygMC6y3jr7RigaWByyg-z9DzgYfDNa9F3TJP5luQ_lHjW0gf8RnxrmO9kfqFtY68IKRRfacS-00W9Se4" />
+</body>
+</html>

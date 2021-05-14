@@ -1,0 +1,724 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin-when-crossorigin" />
+    <meta name="description" content="为什么要升级? webpack4用的好好的，运行稳定，为什么要升级到webpack5,&amp;#160;每次升级，都要经历一场地震，处理许多loader和plugin&amp;#160;API的破坏性改变。&amp;#16" />
+    <meta property="og:description" content="为什么要升级? webpack4用的好好的，运行稳定，为什么要升级到webpack5,&amp;#160;每次升级，都要经历一场地震，处理许多loader和plugin&amp;#160;API的破坏性改变。&amp;#16" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Webpack5构建速度提升令人惊叹，早升级早受益 - 孤舟蓑翁 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=zS6-e1bxywlu3kpHvpr1J6MySwya3ztFtEnS7RYQ0Fk" />
+    <link id="MainCss" rel="stylesheet" href="/skins/coffee/bundle-coffee.min.css?v=BgguPR_JbmA1HKLJOLqLtHq5pt8a1UlO6ibCA_xgwdI" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/coffee/bundle-coffee-mobile.min.css?v=gcYNuAuJkNMICFERxhZCtKHGitYmBYNTxm9W97H2O2g" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/wangpenghui522/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/wangpenghui522/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/wangpenghui522/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 259810;
+        var currentBlogApp = 'wangpenghui522';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'coffee';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2021-05-13 10:59';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=2Mic1VLeHXarpdzASbXqFMIMVLEBiWXNO5yiTHUcmhw"></script>
+    
+    
+    
+</head>
+<body class="has-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding"><a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo.svg?v=R9M0WmLAIPVydmdzE2keuvnjl-bPR7_35oHqtiBzGsM" alt="博客园Logo" /></a></li>
+                <li><a href="/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3" />
+                        <button type="submit" id="zzk_search_button">
+                            <img src="/images/aggsite/search.svg" alt="搜索" />
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="/images/aggsite/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="/images/aggsite/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="/images/aggsite/message.svg?v=J0WS2P2iPgaIVgXxcAhliw4AFZIpaTWxtdoNAv9eiCA" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="/images/aggsite/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a href="https://www.cnblogs.com/wangpenghui522/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/wangpenghui522/">孤舟蓑翁</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<ul id="navList">
+	<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/wangpenghui522/">
+首页</a>
+</li>
+	<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%AD%A4%E8%88%9F%E8%93%91%E7%BF%81">
+联系</a></li>
+	<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+	<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/wangpenghui522/rss/">
+订阅</a>
+	
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/wangpenghui522/rss/">
+    <img src="/skins/coffee/images/xml.gif" alt="订阅" />
+</a></li>
+</ul>
+
+
+
+			<div class="blogStats">
+				
+				<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class = "postTitle">
+			
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wangpenghui522/p/14747627.html">
+    <span>Webpack5构建速度提升令人惊叹，早升级早受益</span>
+    
+
+
+
+</a>
+
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<h3>&nbsp;为什么要升级?</h3>
+<p>webpack4用的好好的，运行稳定，为什么要升级到webpack5,&nbsp;每次升级，都要经历一场地震，处理许多loader和plugin&nbsp;API的破坏性改变。&nbsp;请给我们一个充分的升级理由，不然真的没有动力去折腾。没问题，给你们一个充分的理由，webpack5对构建速度做了突破性的改进，开启文件缓存之后，再次构建，速度提升明显。在我参与的项目中，本地服务器开发环境，第一次构建速度是38.64s，第二次构建速度是1.69s，提升了一个数量级。My God, 是不是很惊喜，很意外。</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511135501665-1046943502.png" alt="" loading="lazy"></p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511140159903-1849935411.png" alt="" loading="lazy"></p>
+<p>&nbsp;生产打包构建速度，同样有显著提升，第一次打包耗时1.01m,第二次打包耗时10.95s.&nbsp; 看到这里，你是不是有了升级的热情，那请继续往下看。</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511140529868-1401352051.png" alt="" loading="lazy"></p>
+<p>&nbsp;<img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511140614232-1750942948.png" alt="" loading="lazy"></p>
+<h3>&nbsp;为什么构建速度有了质的飞跃?</h3>
+<p>主要是因为：</p>
+<p>1.webpack4是根据代码的结构生成chunkhash，添加了空白行或注释，会引起chunkhash的变化，webpack5是根据内容生成chunkhash，改了注释或者变量不会引起chunkhash的变化，浏览器可以继续使用缓存。</p>
+<p>2.优化了对缓存的使用效率。在webpack4 中，chunkId与moduleId都是自增id。只要我们新增一个模块，那么代码中module的数量就会发生变化，从而导致moduleId发生变化，于是文件内容就发生了变化。chunkId也是如此，新增一个入口的时候，chunk数量的变化造成了chunkId的变化，导致了文件内容变化。所以对实际未改变的chunk文件不能有效利用。webpack5采用新的算法来计算确定性的chunkId和moduleId。可以有效利用缓存。在production模式下，optimization.chunkIds和optimization.moduleIds默认会设为’deterministic’。</p>
+<p>3.新增了可以将缓存写入磁盘的配置项,&nbsp;在命令行终止当前构建任务，再次启动构建时，可以复用上一次写入硬盘的缓存，加快构建过程。</p>
+<p>这两项的默认配置为：</p>
+<div class="cnblogs_code">
+<pre>module.exports = (env) =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    splitChunks: {
+        chunks: </span>'async',         <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 指明要分割的插件类型, async:异步插件(动态导入),inital:同步插件,all：全部类型</span>
+        minSize: 20000,          <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">文件最小大小,单位bite;即超过minSize有可能被分割；</span>
+        minRemainingSize: 0,     <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> webpack5新属性，防止0尺寸的chunk</span>
+        minChunks: 1,            <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 被提取的模块必须被引用1次</span>
+        maxAsyncRequests: 30,    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 异步加载代码时同时进行的最大请求数不得超过30个</span>
+        maxInitialRequests: 30,  <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 入口文件加载时最大同时请求数不得超过30个</span>
+        enforceSizeThreshold: 50000<span style="color: rgba(0, 0, 0, 1)">,
+        cacheGroups: {
+          </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 分组缓存</span>
+          <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 将来自node_modules的模块提取到一个公共文件中 （由v4的vendors改名而来）</span>
+<span style="color: rgba(0, 0, 0, 1)">          defaultVendors: {
+            test: </span>/[\\/]node_modules[\\/]/<span style="color: rgba(0, 0, 0, 1)">,
+            priority: </span>-10<span style="color: rgba(0, 0, 0, 1)">,
+            reuseExistingChunk: </span><span style="color: rgba(0, 0, 255, 1)">true</span><span style="color: rgba(0, 0, 0, 1)">,
+          },
+          </span><span style="color: rgba(0, 0, 255, 1)">default</span><span style="color: rgba(0, 0, 0, 1)">: {
+            minChunks: </span>2<span style="color: rgba(0, 0, 0, 1)">,
+            priority: </span>-20<span style="color: rgba(0, 0, 0, 1)">,
+            reuseExistingChunk: </span><span style="color: rgba(0, 0, 255, 1)">true</span><span style="color: rgba(0, 0, 0, 1)">,
+          },
+        },
+      },
+    },
+};</span></pre>
+</div>
+<h3>开启升级之旅</h3>
+<p>webpack每个大版本的升级，都是破坏性变革，很少向后兼容，webpack4到webpack5的升级，同样也不例外。升级犹如去西天取经一样，需要经过九九八十一难，才能取得真经，体会到成就感。只要没有坚持到最后，就会前功尽弃。所以一定要有耐心。好了，废话不多说。现在进入这个章节的主题，细数一下升级过程中踩过的各种坑。</p>
+<p>我对webpack的升级之旅是这样开始的， 直接在webpack4的webpack.config.js添加与提升构建速度有关的配置</p>
+<div class="cnblogs_code">
+<pre>module.exports = () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    optimization: {
+      </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 此设置保证有新增的入口文件时,原有缓存的chunk文件仍然可用</span>
+      moduleIds: "deterministic"<span style="color: rgba(0, 0, 0, 1)">,
+      </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 值为"single"会创建一个在所有生成chunk之间共享的运行时文件</span>
+      runtimeChunk: "single"<span style="color: rgba(0, 0, 0, 1)">,
+      splitChunks: {
+        </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 设置为all, chunk可以在异步和非异步chunk之间共享。</span>
+        chunks: 'all'<span style="color: rgba(0, 0, 0, 1)">, 
+        cacheGroups: {
+          vendor: {
+            test: </span>/[\\/]node_modules[\\/]/<span style="color: rgba(0, 0, 0, 1)">,
+            name: </span>"vendors"<span style="color: rgba(0, 0, 0, 1)">,
+            chunks: </span>"all"<span style="color: rgba(0, 0, 0, 1)">,
+          },
+        },
+      },
+    },
+    cache: {
+      </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 将缓存类型设置为文件系统,默认是memory</span>
+      type: "filesystem"<span style="color: rgba(0, 0, 0, 1)">,
+      buildDependencies: {
+        </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 更改配置文件时，重新缓存</span>
+<span style="color: rgba(0, 0, 0, 1)">        config: [__filename],
+      },
+    },
+  };
+};</span></pre>
+</div>
+<p>报如下错误，webpack4&nbsp;optimization.moduleIds不能设置为deterministic。</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511170203092-10592798.png" alt="" loading="lazy"></p>
+<p>于是对webpack4进行升级, 从"webpack": "^4.39.1"升级到"webpack": "^5.36.1",，升级后，启动编译，报如下错误&nbsp;<code>configuration.devtool should match pattern "^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$"</code></p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511170913334-1663034508.png" alt="" loading="lazy"></p>
+<p>将devtool的配置&nbsp;由devtool:&nbsp;'cheap-module-eval-source-map'改为devtool:&nbsp;'eval-cheap-module-source-map', 继续前行，编译报如下错误：</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511171335849-1011700281.png" alt="" loading="lazy"></p>
+<p>&nbsp;升级&nbsp;"html-webpack-plugin":&nbsp;"^3.2.0"到"html-webpack-plugin":&nbsp;"^5.3.1",继续前行，编译报如下错误：Cannot read property 'normal' of undefined</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511173730729-149651961.png" alt="" loading="lazy"></p>
+<p>&nbsp;这次既有警告，又有报错，经查告警和报错是由于webpack5的API发生改变,而基于webpack4 API开发的一些node工具包还未同步变更, 版本与webpack5不兼容引起的，头痛医头，脚痛医脚，会事倍功半，不胜其烦。于是决定放大招，升级package.json中所有的开发时依赖到最新版本。</p>
+<div class="cnblogs_code">
+<pre>yarn upgrade-interactive --latest</pre>
+</div>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511174758930-1232220738.png" alt="" loading="lazy"></p>
+<p>&nbsp;对标红的开发依赖包进行升级后，继续前行，编译报如下错误 Cannot find module 'webpack-cli/bin/config-yargs'</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511175108260-135310952.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查，是因为webpack-cli4移除了yargs模块，除了要注释掉项目中对yargs模块的引用，还要修改package.json里面webpack-dev-server的写法, 将'webpack-dev-server'改为'webpack serve'。</p>
+<div class="cnblogs_code">
+<pre>    "start:local": "cross-env NODE_ENV=development webpack-dev-server --config webpack/dev.js --progress --mode development --current-env local"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/dev.js --progress --mode development --current-env dev"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:test": "cross-env NODE_ENV=development webpack-dev-server --config webpack/dev.js --progress --mode development --current-env test"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:prod": "cross-env NODE_ENV=development webpack-dev-server --config webpack/dev.js --progress --mode development --current-env prod",</pre>
+</div>
+<div class="cnblogs_code">
+<pre>    "start:local": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development --current-env local"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:dev": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development --current-env dev"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:test": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development --current-env test"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:prod": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development --current-env prod",</pre>
+</div>
+<p>改完之后，继续前行，编译报如下错误 Unknown options</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511185012332-1796755772.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查是因为webpack-cli的参数写法不对，于是按照官方文档修改为</p>
+<div class="cnblogs_code">
+<pre>    "start:local": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development  --env currentEnv=local"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:dev": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development --env currentEnv=dev"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:test": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development --env currentEnv=test"<span style="color: rgba(0, 0, 0, 1)">,
+    </span>"start:prod": "cross-env NODE_ENV=development webpack serve --config webpack/dev.js --progress --mode development --env currentEnv=prod",</pre>
+</div>
+<p>获取命令行自定义参数的写法改为</p>
+<div class="cnblogs_code">
+<pre>module.exports = (env) =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  const currentEnv </span>=<span style="color: rgba(0, 0, 0, 1)"> env.currentEnv;
+  </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">...</span>
+}</pre>
+</div>
+<p>改完之后，继续前行，编译报如下错误：TypeError: merge is not a function</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511185737981-1640865844.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查是最新版本的webpack-merge的merge导出方式有问题，修改merge的导出方式为</p>
+<div class="cnblogs_code">
+<pre>const { merge } = require('webpack-merge');</pre>
+</div>
+<p>改完之后，继续前行，编译报如下错误: this.getOptions is not a function</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511190447322-1844459503.png" alt="" loading="lazy"></p>
+<p>经查是less-loader的配置写法导致的，&nbsp;按照最新版本的配置写法，修改less和module.less加载器的配置</p>
+<div class="cnblogs_code">
+<pre>const lessLoader =<span style="color: rgba(0, 0, 0, 1)"> [
+  </span>"css-loader"<span style="color: rgba(0, 0, 0, 1)">,
+  </span>"postcss-loader"<span style="color: rgba(0, 0, 0, 1)">,
+  {
+    loader: </span>"less-loader"<span style="color: rgba(0, 0, 0, 1)">,
+    options: { lessOptions: { javascriptEnabled: </span><span style="color: rgba(0, 0, 255, 1)">true</span><span style="color: rgba(0, 0, 0, 1)"> } },
+  },
+];
+
+module.exports </span>= () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    module: {
+      rules: [
+        {
+          test: lessReg,
+          exclude: lessModuleReg,
+          use: isDev
+            </span>? ["style-loader"<span style="color: rgba(0, 0, 0, 1)">, ...lessLoader]
+            : [MiniCssExtractPlugin.loader, </span>"happypack/loader?id=less"<span style="color: rgba(0, 0, 0, 1)">],
+        },
+        {
+          test: lessModuleReg,
+          exclude: path.resolve(__dirname, </span>"./node_modules"<span style="color: rgba(0, 0, 0, 1)">),
+          </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> include: [path.resolve(__dirname, '../src')],</span>
+<span style="color: rgba(0, 0, 0, 1)">          use: isDev
+            </span>? ["style-loader"<span style="color: rgba(0, 0, 0, 1)">, ...lessLoader]
+            : [
+                MiniCssExtractPlugin.loader,
+                </span>"happypack/loader?id=lessWithModule"<span style="color: rgba(0, 0, 0, 1)">,
+              ],
+        },
+      ],
+    },
+  };
+};</span></pre>
+</div>
+<p>继续前行，编译有如下警告: consider using [chunkhash] or [contenthash]</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512101533361-1739031782.png" alt="" loading="lazy"></p>
+<p>将项目配置中用到hash的地方，修改成contenthash</p>
+<div class="cnblogs_code">
+<pre>module.exports = () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    output: {
+      path: path.resolve(rootPath, </span>"./dist"<span style="color: rgba(0, 0, 0, 1)">),
+      filename: isDev
+        </span>? "js/[name].[contenthash:8].js"<span style="color: rgba(0, 0, 0, 1)">
+        : </span>"js/[name].[chunkhash:8].js"<span style="color: rgba(0, 0, 0, 1)">,
+      publicPath,
+    },
+    module: {
+      rules: [
+        {
+          test: [</span>/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.ico$/<span style="color: rgba(0, 0, 0, 1)">],
+          loader: </span>"url-loader"<span style="color: rgba(0, 0, 0, 1)">,
+          options: {
+            limit: </span>10000<span style="color: rgba(0, 0, 0, 1)">,
+            name: isDev
+              </span>? "image/[name][contenthash:8].[ext]"<span style="color: rgba(0, 0, 0, 1)">
+              : </span>"image/[name].[contenthash:8].[ext]"<span style="color: rgba(0, 0, 0, 1)">,
+          },
+        },
+        {
+          </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 添加otf字体支持</span>
+          test: /\.(woff|svg|eot|ttf|otf)\??.*$/<span style="color: rgba(0, 0, 0, 1)">,
+          loader: </span>"url-loader"<span style="color: rgba(0, 0, 0, 1)">,
+          options: {
+            limit: </span>10000<span style="color: rgba(0, 0, 0, 1)">,
+            name: isDev
+              </span>? "font/[name][contenthash:8].[ext]"<span style="color: rgba(0, 0, 0, 1)">
+              : </span>"font/[name].[contenthash:8].[ext]"<span style="color: rgba(0, 0, 0, 1)">,
+          },
+        },
+      ],
+    },
+    plugins: [
+      </span><span style="color: rgba(0, 0, 255, 1)">new</span><span style="color: rgba(0, 0, 0, 1)"> MiniCssExtractPlugin({
+        filename: isDev
+          </span>? "css/[name][contenthash:8].css"<span style="color: rgba(0, 0, 0, 1)">
+          : </span>"css/[name].[chunkhash:8].css"<span style="color: rgba(0, 0, 0, 1)">,
+        chunkFilename: isDev
+          </span>? "css/[id][contenthash:8].css"<span style="color: rgba(0, 0, 0, 1)">
+          : </span>"css/[id].[chunkhash:8].css"<span style="color: rgba(0, 0, 0, 1)">,
+        ignoreOrder: </span><span style="color: rgba(0, 0, 255, 1)">false</span><span style="color: rgba(0, 0, 0, 1)">,
+      }),
+    ],
+  };
+};</span></pre>
+</div>
+<p>修改完之后，本地开发环境终于不报错了。可是发现修改代码之后页面不自动刷新。经查是webpack5的bug,&nbsp;如果在 package.json 里面写了&nbsp;browserslist，会导致热更新失效，解决方案是在 webpack 配置中设置 target 字段，在开发阶段使得 browserslist 失效</p>
+<div class="cnblogs_code">
+<pre>module.exports = (env) =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+    target: process.env.NODE_ENV === "development" ? "web" : "browserslist"<span style="color: rgba(0, 0, 0, 1)">,</span><span style="color: rgba(0, 0, 0, 1)">
+  };
+};</span></pre>
+</div>
+<p>再看看生产编译打包是否正常。</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512102627341-1385659620.png" alt="" loading="lazy"></p>
+<p>&nbsp;执行yarn build:prod之后，报如下错误 MainTemplate.hooks.hashForChunk is deprecated，这个报错前面遇到过，一看就是生产模式用到的不同于开发模式的插件，与webpack5不兼容导致的。</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512103724218-1216663362.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查解决方案是用&nbsp;terser-webpack-plugin替换原来的js压缩插件uglifyjs-webpack-plugin</p>
+<div class="cnblogs_code">
+<pre>const TerserPlugin = require('terser-webpack-plugin'); <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 对js进行压缩</span>
+<span style="color: rgba(0, 0, 0, 1)">
+module.exports </span>= () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    optimization: {
+        minimize: </span><span style="color: rgba(0, 0, 255, 1)">true</span><span style="color: rgba(0, 0, 0, 1)">,
+        minimizer: [
+          </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> terserPlugin是webpack推荐及内置的压缩插件，cache与parallel默认为开启状态</span>
+          <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 缓存路径在node_modules/.cache/terser-webpack-plugin</span>
+          <span style="color: rgba(0, 0, 255, 1)">new</span><span style="color: rgba(0, 0, 0, 1)"> TerserPlugin({
+            terserOptions: {
+              </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> https://github.com/terser/terser#minify-options</span>
+<span style="color: rgba(0, 0, 0, 1)">              compress: {
+                warnings: </span><span style="color: rgba(0, 0, 255, 1)">false</span>, <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 删除无用代码时是否给出警告</span>
+                drop_debugger: <span style="color: rgba(0, 0, 255, 1)">true</span>, <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 删除所有的debugger</span>
+                <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> drop_console: true, // 删除所有的console.*</span>
+                pure_funcs: [''<span style="color: rgba(0, 0, 0, 1)">],
+                </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> pure_funcs: ['console.log'], // 删除所有的console.log</span>
+<span style="color: rgba(0, 0, 0, 1)">              },
+            },
+          }),
+          </span><span style="color: rgba(0, 0, 255, 1)">new</span><span style="color: rgba(0, 0, 0, 1)"> CssMinimizerPlugin(),
+        ],
+      },
+  };
+};</span></pre>
+</div>
+<p>改完之后，编译报许多如下错误: You forgot to add 'mini-css-extract-plugin'</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512110435948-2073241996.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查是因为webpack5中，happypack不再支持less-loader，修改配置文件,less-loader不开启多进程编译</p>
+<div class="cnblogs_code">
+<pre>module.exports = () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    module: {
+      rules: [
+        {
+          test: lessReg,
+          exclude: lessModuleReg,
+          </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> use: isDev ? ['style-loader', ...lessLoader] : ['happypack/loader?id=less'],</span>
+<span style="color: rgba(0, 0, 0, 1)">          use: isDev
+            </span>? ["style-loader"<span style="color: rgba(0, 0, 0, 1)">, ...lessLoader]
+            : [MiniCssExtractPlugin.loader, ...lessLoader],
+        },
+        {
+          test: lessModuleReg,
+          exclude: path.resolve(__dirname, </span>"./node_modules"<span style="color: rgba(0, 0, 0, 1)">),
+          </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> include: [path.resolve(__dirname, '../src')],</span>
+          <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> use: isDev</span>
+          <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   ? ['style-loader', ...lessLoader]</span>
+          <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   : ['happypack/loader?id=lessWithModule'],</span>
+<span style="color: rgba(0, 0, 0, 1)">          use: isDev
+            </span>? ["style-loader"<span style="color: rgba(0, 0, 0, 1)">, ...lessLoader]
+            : [MiniCssExtractPlugin.loader, ...lessLoader],
+        },
+      ],
+    },
+    plugins: [
+        </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> new Happypack({</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   id: 'less',</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   threadPool: happyThreadPool,</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   use: [MiniCssExtractPlugin.loader, ...lessLoader],</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> }),</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> new Happypack({</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   id: 'lessWithModule',</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   threadPool: happyThreadPool,</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   use: [MiniCssExtractPlugin.loader, ...lessLoader],</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> }),</span>
+<span style="color: rgba(0, 0, 0, 1)">      ],
+  };
+};</span></pre>
+</div>
+<p>修改之后，继续编译，报如下错误：Module not found: Error: Can't resolve 'crypto'</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512111057762-159887470.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查webpack4 引入crypto-js模块会自动引入polyfill: crypto-browserify, webpack5默认会自动将path、crypto、http、stream、zlib、vm的node polyfill剔除，为了不影响之前的业务，我们手动添加这个工具包</p>
+<div class="cnblogs_code">
+<pre>yarn add -D crypto-browserify</pre>
+</div>
+<div class="cnblogs_code">
+<pre>module.exports = () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    resolve: {
+        fallback:{
+            </span>"stream": <span style="color: rgba(0, 0, 255, 1)">false</span><span style="color: rgba(0, 0, 0, 1)">,
+            </span>"buffer": <span style="color: rgba(0, 0, 255, 1)">false</span><span style="color: rgba(0, 0, 0, 1)">,
+            </span>"crypto": require.resolve("crypto-browserify"<span style="color: rgba(0, 0, 0, 1)">)
+          }
+      },
+  };
+};</span></pre>
+</div>
+<p>改完之后，编译报如下警告: Conflicting values for 'process.env'</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512112859842-1635770660.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查是webpack5&nbsp;定义全局变量的写法改变了，按照最新的语法修改如下：</p>
+<div class="cnblogs_code">
+<pre>module.exports = () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    plugins: [
+      </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> webpack5 定义环境变量的写法变了</span>
+      <span style="color: rgba(0, 0, 255, 1)">new</span><span style="color: rgba(0, 0, 0, 1)"> webpack.DefinePlugin({
+        </span>"process.env.WX_JS_SDK_ENABLED"<span style="color: rgba(0, 0, 0, 1)">: WX_JS_SDK_ENABLED,
+        </span>"process.env.CURRENT_ENV"<span style="color: rgba(0, 0, 0, 1)">: JSON.stringify(currentEnv),
+        </span>"process.env.RELEASE_VERSION"<span style="color: rgba(0, 0, 0, 1)">: JSON.stringify(RELEASE_VERSION),
+      }),
+
+      </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> webpack4的写法</span>
+    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   new webpack.DefinePlugin({</span>
+    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">     "process.env": {</span>
+    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">       WX_JS_SDK_ENABLED: WX_JS_SDK_ENABLED, // 是否真机调试SDK模式</span>
+    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">       CURRENT_ENV: JSON.stringify(currentEnv),</span>
+    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">       RELEASE_VERSION: JSON.stringify(RELEASE_VERSION),</span>
+    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">     },</span>
+    <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">   }),</span>
+<span style="color: rgba(0, 0, 0, 1)">    ],
+  };
+};</span></pre>
+</div>
+<p>修改完之后，编译报如下错误：optimizeChunkAssets is deprecated</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512114009781-537742723.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查是optimize-css-assets-webpack-plugin插件与webpack5不兼容引起的警告，webpack5中同等功能的插件是css-minimizer-webpack-plugin，安装并修改配置</p>
+<div class="cnblogs_code">
+<pre>yarn add -D css-minimizer-webpack-plugin</pre>
+</div>
+<div class="cnblogs_code">
+<pre>const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> 对CSS进行压缩</span>
+module.exports = () =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+  </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">    optimization: {
+      minimize: </span><span style="color: rgba(0, 0, 255, 1)">true</span><span style="color: rgba(0, 0, 0, 1)">,
+      minimizer: [
+        </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+        <span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> new OptimizeCSSAssetsPlugin(),</span>
+        <span style="color: rgba(0, 0, 255, 1)">new</span><span style="color: rgba(0, 0, 0, 1)"> CssMinimizerPlugin(),
+      ],
+    },
+  };
+};</span></pre>
+</div>
+<p>改好之后，编译报如下错误&nbsp;complier.plugin is not a function</p>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210512134002316-1534570831.png" alt="" loading="lazy"></p>
+<p>&nbsp;经查是webpack-cos-plugin插件报的错，&nbsp;Webpack5 发布后，各大主流 plugin 都已经相继适配webpack5新的plugin api, 而webpack-cos-plugin最新的版本是两年前的，近期没有做过维护，看完<a href="https://webpack.js.org/api/plugins/#plugin-types" target="_blank">官网文档</a>后，手动修复一下</p>
+<div class="cnblogs_code">
+<pre>compiler.hooks.emit.tap('WebpackQcloudCOSPlugin', (compilation) =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 0, 255, 1)">var</span> files =<span style="color: rgba(0, 0, 0, 1)"> _this.pickupAssetsFiles(compilation);
+    log(</span>'' + green('\nCOS 上传开始......'<span style="color: rgba(0, 0, 0, 1)">));
+    _this
+        .uploadFiles(files, compilation)
+        .then(</span><span style="color: rgba(0, 0, 255, 1)">function</span><span style="color: rgba(0, 0, 0, 1)"> () {
+        log(</span>'' + green('COS 上传完成\n'<span style="color: rgba(0, 0, 0, 1)">));
+        })
+        .</span><span style="color: rgba(0, 0, 255, 1)">catch</span>(<span style="color: rgba(0, 0, 255, 1)">function</span><span style="color: rgba(0, 0, 0, 1)"> (err) {
+        log(red(</span>'COS 上传出错') + '::: ' + red(err.code) + '-' + red(err.name) + ': ' +<span style="color: rgba(0, 0, 0, 1)"> red(err.message));
+        _this.config.ignoreError </span>||<span style="color: rgba(0, 0, 0, 1)"> compilation.errors.push(err);
+        });
+});</span></pre>
+</div>
+<p>然后在Linux机器上部署打包编译时，用修改之后的文件替换node_modules下的同名文件</p>
+<div class="cnblogs_code">
+<pre>\<span style="color: rgba(0, 0, 255, 1)">cp</span>  -rf webpack/cos/index.js node_modules/webpack-cos-plugin/lib</pre>
+</div>
+<p>运行打包命令，这次终于可以正常打包上传了，可是发现，打包之后的文件，页面中有些图片展示不出来，经查，未加载出来的图片，src的值是[object Module]</p>
+<pre class="default s-code-block hljs xml"></pre>
+<p><img src="https://img2020.cnblogs.com/blog/861554/202105/861554-20210511094515081-533953982.png" alt="" loading="lazy"></p>
+<p>通过样式名查找，发现代码中凡是通过require给图片的src属性赋值的图片都加载不出来</p>
+<div class="cnblogs_code">
+<pre>&lt;img src="require('assets/xxx.png')"/&gt;</pre>
+</div>
+<p>原因是url-loader最新版本默认情况下会把require引入的内容当做esModules去处理,而不是解析内容本身，所以要关闭默认解析方式。</p>
+<div class="cnblogs_code">
+<pre>module.exports = (env) =&gt;<span style="color: rgba(0, 0, 0, 1)"> {
+    </span><span style="color: rgba(0, 0, 255, 1)">return</span><span style="color: rgba(0, 0, 0, 1)"> {
+        </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)"> ...</span>
+<span style="color: rgba(0, 0, 0, 1)">        module: {
+            rules: [
+            {
+                test: </span>/\.(png|jpe?g|gif|ico|bmp)$/<span style="color: rgba(0, 0, 0, 1)">i,
+                use: [
+                {
+                    loader: </span>'url-loader'<span style="color: rgba(0, 0, 0, 1)">,
+                    options: {
+                        esModule: </span><span style="color: rgba(0, 0, 255, 1)">false</span><span style="color: rgba(0, 0, 0, 1)">, // 增加这一句
+                        limit: </span>10000<span style="color: rgba(0, 0, 0, 1)">,
+                        name: isDev </span>? 'image/[name][hash:8].[ext]' : 'image/[name].[contenthash:8].[ext]'<span style="color: rgba(0, 0, 0, 1)">,
+                    },
+                },
+                ],
+            },
+            ],
+        },
+    }
+}</span></pre>
+</div>
+<p>至此，大功告成。本地开发和生产打包所有的升级报错问题都已解决。可以愉快地享受webpack5带来全新打包体验。</p>
+<p>参考文章</p>
+<ul>
+<li>https://stackoverflow.com/questions/59070216/webpack-file-loader-outputs-object-module</li>
+<li>https://stackoverflow.com/questions/64557638/how-to-polyfill-node-core-modules-in-webpack-5</li>
+<li>https://webpack.js.org/api/cli/#env</li>
+<li>https://webpack.docschina.org/blog/2020-10-10-webpack-5-release/</li>
+<li>https://www.npmjs.com/package/webpack-cos-plugin</li>
+<li>https://blog.csdn.net/qq_36741436/article/details/78732201</li>
+<li>https://webpack.js.org/api/plugins/#plugin-types</li>
+</ul>
+<p>&nbsp;</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+		</div>
+		<div class="postDesc">posted @ 
+<span id="post-date">2021-05-13 22:59</span>&nbsp;
+<a href="https://www.cnblogs.com/wangpenghui522/">孤舟蓑翁</a>&nbsp;
+阅读(<span id="post_view_count">0</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=14747627" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(14747627);return false;">收藏</a></div>
+	</div>
+	
+	
+</div><!--end: topics 文章、评论容器-->
+<script src="https://common.cnblogs.com/highlight/10.3.1/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 259810, cb_blogApp = 'wangpenghui522', cb_blogUserGuid = 'b0631e50-8ba7-e511-9fc1-ac853d9f53cc';
+    var cb_entryId = 14747627, cb_entryCreatedDate = '2021-05-13 22:59', cb_postType = 1;
+    updatePostStats(
+        [cb_entryId],
+        function(id, count) { $("#post_view_count").text(count) },
+        function(id, count) { $("#post_comment_count").text(count) })
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+</script>
+<a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="cnblogs_c2" class="under-post-card">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+       var commentManager = new blogCommentManager();
+       commentManager.renderComments(0);
+       fixPostBody();
+       deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);       deliverT2();
+       deliverC1C2();
+       loadNewsAndKb();
+       loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);       LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+       GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+       loadOptUnderPost();
+       GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+<div id="sidebar_c3"></div>
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script></div>
+			
+			<DIV id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</DIV>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2021 孤舟蓑翁
+<br /><span id="poweredby">Powered by .NET 5.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8L-rpLgFVEJMgssCVvNUAjvWfQ22eMQtJ3xIK6AQwGggRk0caSBjG-Anqr3Ev8I1I2f_kPbahGjRrTQP_OQbW2JpXo9o-pvRaUapkXqYTaNTtnkmycieYyVUPh24Jilne029t2ZDX86ufNbncOIDUUQ" />
+</body>
+</html>

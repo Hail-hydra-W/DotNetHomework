@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="never" />
+    <meta name="description" content="老版本的 Linux 中都是使用 ifconfig 命令检查和配置网络接口，但是该命令目前已经没有维护了，取而代之的是 ip 命令 ip 命令和 ifconfig 命令很相似，但是 相比起来，ip命令" />
+    <meta property="og:description" content="老版本的 Linux 中都是使用 ifconfig 命令检查和配置网络接口，但是该命令目前已经没有维护了，取而代之的是 ip 命令 ip 命令和 ifconfig 命令很相似，但是 相比起来，ip命令" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Linux 中如何使用 IP 命令 - Linux开发那些事儿 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=zS6-e1bxywlu3kpHvpr1J6MySwya3ztFtEnS7RYQ0Fk" />
+    <link id="MainCss" rel="stylesheet" href="/skins/simplememory/bundle-simplememory.min.css?v=uknaX_hejnSu-njQgx4Hj1R0JiPLwUhFPUlwWNmWyB4" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/SimpleMemory/bundle-SimpleMemory-mobile.min.css" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/wanng/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/wanng/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/wanng/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 591012;
+        var currentBlogApp = 'wanng';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2021-05-13 11:14';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=2Mic1VLeHXarpdzASbXqFMIMVLEBiWXNO5yiTHUcmhw"></script>
+    
+    
+    
+</head>
+<body class="has-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding"><a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo.svg?v=R9M0WmLAIPVydmdzE2keuvnjl-bPR7_35oHqtiBzGsM" alt="博客园Logo" /></a></li>
+                <li><a href="/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3" />
+                        <button type="submit" id="zzk_search_button">
+                            <img src="/images/aggsite/search.svg" alt="搜索" />
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="/images/aggsite/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="/images/aggsite/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="/images/aggsite/message.svg?v=J0WS2P2iPgaIVgXxcAhliw4AFZIpaTWxtdoNAv9eiCA" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="/images/aggsite/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/wanng/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/wanng/">Linux开发那些事儿</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/wanng/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/Linux%E5%BC%80%E5%8F%91%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/wanng/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<div id="blog_stats_place_holder"><script>loadBlogStats();</script></div>
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/wanng/p/ip-command.html">
+    <span>Linux 中如何使用 IP 命令</span>
+    
+
+
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<p><img src="https://pic1.imgdb.cn/item/5fca485d394ac523787af4ba.jpg" alt="" loading="lazy"></p>
+<p>老版本的 Linux 中都是使用 <code>ifconfig</code> 命令检查和配置网络接口，但是该命令目前已经没有维护了，取而代之的是 <code>ip</code> 命令</p>
+<p><code>ip</code> 命令和 <code>ifconfig</code> 命令很相似，但是 相比起来，<code>ip</code>命令的功能更强大，它能执行多种 <code>ifconfig</code> 命令无法执行的任务</p>
+<p>本文将介绍 <code>ip</code> 命令常用的一些操作</p>
+<h3 id="显示所有网络接口信息"><font color="CornflowerBlue">显示所有网络接口信息</font></h3>
+<p>输入 <code>ip addr</code> 或者 <code>ip a</code> 命令可以显示所有的网络接口信息</p>
+<pre><code>[root@ecs-centos-7 ~]# ip addr
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.9/24 brd 192.168.0.255 scope global noprefixroute dynamic eth0
+       valid_lft 74409sec preferred_lft 74409sec
+    inet6 fe80::f816:3eff:fee0:4fb8/64 scope link 
+       valid_lft forever preferred_lft forever
+[root@ecs-centos-7 ~]# 
+</code></pre>
+<p>上面的输出中，可以看出系统目前的网络接口分别是 <code>lo</code> 和 <code>eth0</code>, 前者是网络环回接口，后者是常规的网络接口</p>
+<p>输出接口信息的 字段详解</p>
+<pre><code>&lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;: BROADCAST 表示支持广播, MULTICAST 表示支持多播
+
+UP 网络接口处于开启状态
+
+LOWER_UP 表示网络电缆已插入并且已连上网络
+
+mtu 1500: 最大传输的单位1500字节
+
+qdisc pfifo_fast: 数据包排队
+
+state UP: 接口状态已开启
+
+qlen 1000: 传输队列长度
+
+link/ether fa:16:3e:e0:4f:b8 Mac地址
+
+brd ff:ff:ff:ff:ff:ff 广播地址
+
+inet 192.168.0.9/24 : IPV4
+
+scope global: 全局有效
+
+dynamic eth0: 动态分配地址
+
+valid_lft 74409sec: IPV4有效期
+
+preferred_lft 74409sec: IPV4首选生存期
+
+inet6 fe80::f816:3eff:fee0:4fb8/64  IPV6
+
+scope link: 仅在此接口上生效
+</code></pre>
+<p>除了输出所有的网络接口信息外，还可以按照以下方式个性化输出网络接口信息</p>
+<ul>
+<li><font color="CornflowerBlue">按照是否支持 IPV4 或 IPV6输出</font></li>
+</ul>
+<p>命令 <code>ip -4 a</code> 会输出只支持IPV4的接口信息</p>
+<p>同样，命令 <code>ip -6 a</code> 会输出只支持IPV6的接口信息</p>
+<ul>
+<li><font color="CornflowerBlue">按照接口名字输出</font></li>
+</ul>
+<p>命令 <code>ip a show eth0</code>会输出 <code>eth0</code>接口的信息</p>
+<pre><code>[root@ecs-centos-7 ~]# ip a show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.9/24 brd 192.168.0.255 scope global noprefixroute dynamic eth0
+       valid_lft 73494sec preferred_lft 73494sec
+    inet6 fe80::f816:3eff:fee0:4fb8/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre>
+<ul>
+<li><font color="CornflowerBlue">按照网络接口开启和关闭状态输出</font></li>
+</ul>
+<p>命令 <code> ip link ls up</code> 会输出所有处于开启状态的网络接口信息</p>
+<p>那么，<code> ip link ls down</code>就会输出所有处于关闭状态的网络接口信息</p>
+<h3 id="为网络接口-添加、移除-ip地址"><font color="CornflowerBlue">为网络接口 添加、移除 IP地址</font></h3>
+<ul>
+<li><font color="CornflowerBlue">添加IP</font></li>
+</ul>
+<p>为指定网络接口分配IP地址的命令格式: <code>ip a add ip地址 dev 接口名字</code></p>
+<p>比如：现在要为<code>eth0</code> 网络接口分配一个网络掩码为 20 的IP <code>192.168.1.10</code>, 具体的输入请看下面的实例</p>
+<pre><code>[root@ecs-centos-7 ~]# ip a add 192.168.1.10/20  dev eth0
+[root@ecs-centos-7 ~]# ip a show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.9/24 brd 192.168.0.255 scope global noprefixroute dynamic eth0
+       valid_lft 71787sec preferred_lft 71787sec
+    inet 192.168.1.10/20 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fee0:4fb8/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre>
+<p>从上面例子的输出结果可以看出，网络接口<code>eth0</code>上多了一个<code>192.168.1.10</code>的 IP</p>
+<p>命令 <code>ip a add 192.168.1.10/20  dev eth0</code> 执行成功的话，是没有任何输出，如果网络接口 <code>eth0</code> 不存在的话，会输出 <code>Cannot find device "eth0" </code> 的错误信息</p>
+<p>其实，还可以通过执行 <code>ping 192.168.1.10 </code> 命令来测试网络接口上IP是否分配成功，如果能 ping 通IP的话，表示分配成功，否则表示失败</p>
+<p><font color="red">说明：192.168.1.10/20 中 20 是 CIDR 表示法的网络掩码，想详细了解的可以自行查阅网络掩码的资料</font></p>
+<ul>
+<li><font color="CornflowerBlue">移除IP</font></li>
+</ul>
+<p>网络接口上添加了IP之后，可使用 <code>ip a del ip地址 dev 接口名字</code> 命令从指定的接口移除指定的IP，移除的时候IP后面需要携带网络掩码</p>
+<pre><code>[root@ecs-centos-7 ~]# ip a del 192.168.1.10/20 dev eth0
+[root@ecs-centos-7 ~]# ip a show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.9/24 brd 192.168.0.255 scope global noprefixroute dynamic eth0
+       valid_lft 71414sec preferred_lft 71414sec
+    inet6 fe80::f816:3eff:fee0:4fb8/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre>
+<h3 id="修改网络接口状态"><font color="CornflowerBlue">修改网络接口状态</font></h3>
+<p>要关闭或者开启网络接口，可以使用 <code>ip link set dev 接口名字 up/down</code> 命令</p>
+<p>例如：有 <code>lo</code> 和 <code>eth0</code> 两个网络接口, 具体接口信息如下</p>
+<pre><code>[root@ecs-centos-7 ~]# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.9/24 brd 192.168.0.255 scope global noprefixroute dynamic eth0
+       valid_lft 59216sec preferred_lft 59216sec
+    inet6 fe80::f816:3eff:fee0:4fb8/64 scope link 
+       valid_lft forever preferred_lft forever
+</code></pre>
+<p>通过 <code>ping -w 3 127.0.0.1 </code> 命令测试，结果表明 <code>lo</code> 接口目前是开启状态，具体的测试输出如下所示</p>
+<pre><code>[root@ecs-centos-7 ~]# ping -w 3 127.0.0.1
+PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.014 ms
+64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.026 ms
+64 bytes from 127.0.0.1: icmp_seq=3 ttl=64 time=0.022 ms
+64 bytes from 127.0.0.1: icmp_seq=4 ttl=64 time=0.023 ms
+
+--- 127.0.0.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 2999ms
+rtt min/avg/max/mdev = 0.014/0.021/0.026/0.005 ms
+</code></pre>
+<p>现在关闭 <code>lo</code> 网络接口，并再次测试该接口的状态，具体命令如下：</p>
+<pre><code>[root@ecs-centos-7 ~]# ip link set dev lo down
+[root@ecs-centos-7 ~]# ip link show lo
+1: lo: &lt;LOOPBACK&gt; mtu 65536 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+
+[root@ecs-centos-7 ~]# ping -w 3 127.0.0.1
+PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+
+--- 127.0.0.1 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 2999ms
+
+</code></pre>
+<p>执行 <code>ip link set dev lo down </code> 命令之后，关闭了网络接口<code>lo</code>，通过 <code>ip link show lo</code> 命令查看该接口的信息，结果表明接口是关闭状态，再次通过 <code>ping -w 3 127.0.0.1 </code>测试接口的状态，再一次确认了接口是关闭状态</p>
+<h3 id="修改网络接口传输队列长度"><font color="CornflowerBlue">修改网络接口传输队列长度</font></h3>
+<p>通过 <code>p l set txqueuelen 长度 dev 接口名字</code> 命令可以设置网络接口的传输队列长度</p>
+<pre><code>[root@ecs-centos-7 ~]# ip l show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1200
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+    
+[root@ecs-centos-7 ~]# ip l set txqueuelen 1000 dev eth0
+[root@ecs-centos-7 ~]# ip l show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+</code></pre>
+<p>上面的例子中，字符串 <mark><code>qlen 1200</code></mark> 表示传输队列长度是 <mark><code>1200</code></mark></p>
+<p>从例子中可以看出，修改传输队列长度之前，传输队列长度是 <mark><code>1200</code></mark></p>
+<p>执行 <code>ip l set txqueuelen 1000 dev eth0 </code> 命令把传输队列长队修改为 <code>1000</code>, 然后再执行 <code>ip l show eth0</code> 命令查询 <code>eth0</code>网络接口的信息，查询结果中 <mark><code>default qlen 1000</code></mark> 说明修改成功</p>
+<h3 id="修改网络接口的mtu最大传输单元"><font color="CornflowerBlue">修改网络接口的MTU(最大传输单元)</font></h3>
+<p>通过 <code>p l set mtu 长度 dev 接口名字</code> 命令可以设置网络接口的最大传输单元</p>
+<pre><code>[root@ecs-centos-7 ~]# ip l show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1600 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1200
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+
+
+[root@ecs-centos-7 ~]# ip l set set mtu 1500 dev eth0
+[root@ecs-centos-7 ~]# ip l show eth0
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1200
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+</code></pre>
+<p>上面的例子中，字符串 <mark><code>mtu 1600</code></mark> 表示最大传输单元是 <mark><code>1600</code></mark></p>
+<p>从例子中可以看出，修改传输队列长度之前，最大传输单元是 <mark><code>1600</code></mark></p>
+<p>执行 <code>ip l set set mtu 1500 dev eth0 </code> 命令把最大传输单元修改为 <code>1500</code>, 然后再执行 <code>ip l show eth0</code> 命令查询 <code>eth0</code>网络接口的信息，查询结果中 <mark><code>mtu 1500 </code></mark> 说明修改成功</p>
+<h3 id="查看ip路由表"><font color="CornflowerBlue">查看IP路由表</font></h3>
+<p>下面几条命令都可以查看 IP 路由表</p>
+<pre><code>ip r
+ip route
+ip r list
+ip route list
+</code></pre>
+<ul>
+<li><font color="CornflowerBlue">查看路由表</font></li>
+</ul>
+<pre><code>[root@ecs-centos-7 ~]# ip r
+default via 192.168.0.1 dev eth0 proto dhcp metric 100 
+169.254.169.254 via 192.168.0.254 dev eth0 proto dhcp metric 100 
+192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.9 metric 100
+</code></pre>
+<ul>
+<li><font color="CornflowerBlue">查看指定IP以及网络掩码的路由表</font></li>
+</ul>
+<pre><code>[root@ecs-centos-7 ~]# ip r list 192.168.0.0/24
+192.168.0.0/24 dev eth0 proto kernel scope link src 192.168.0.9 metric 100 
+</code></pre>
+<h3 id="查看arp缓存"><font color="CornflowerBlue">查看ARP缓存</font></h3>
+<p>ARP是 Address Resolution Protocol 的缩写, 全称是地址解析协议，它是用于实现从IP地址到Mac地址的映射，也就是询问目标IP的Mac地址</p>
+<p>在本地存储了一份IP对应Mac地址的映射表，这张表叫做 ARP缓存表，可以使用 <code>ip n</code> 命令查看缓存表</p>
+<pre><code>[root@ecs-centos-7 ~]# ip n
+192.168.0.1 dev eth0 lladdr fa:16:3e:64:38:a8 REACHABLE
+192.168.0.254 dev eth0 lladdr fa:fa:fa:fa:fa:01 STALE
+</code></pre>
+<h3 id="更改网卡mac地址"><font color="CornflowerBlue">更改网卡Mac地址</font></h3>
+<p>大部分场景中是不需要修改Mac地址的，但有时你可能想隐藏真实的Mac地址(物理地址)，这时可以修改Mac地址，修改Mac地址的命令如下</p>
+<pre><code>ip link set dev 接口名 address 新的Mac地址
+</code></pre>
+<p>下面以修改 <code>lo</code> 网络接口的Mac地址为例来说明</p>
+<pre><code>[root@ecs-centos-7 ~]# ip l list lo
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+
+[root@ecs-centos-7 ~]# ip l set lo address fa:16:3e:e0:4f:b4
+[root@ecs-centos-7 ~]# ip l list lo
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback fa:16:3e:e0:4f:b4 brd 00:00:00:00:00:00
+</code></pre>
+<p>从上面的例子中可以看出，<code>lo</code>接口初始的Mac地址是 <code>00:00:00:00:00:00</code></p>
+<p>执行 <code>ip l set lo address fa:16:3e:e0:4f:b4</code> 命令修改Mac地址，然后再执行 <code> ip l list lo</code> 查看 <code>lo</code>接口的信息，输出的结果信息表明Mac地址修改成功</p>
+<p><mark>注意：如果当前网络接口上执行上面的命令，当前会话会中断，需要重启机器才能恢复，所以最好是在其他的网络接口上测试</mark></p>
+<h3 id="查看网络统计信息"><font color="CornflowerBlue">查看网络统计信息</font></h3>
+<p>通过 <code>ip -s link</code> 命令可以查看网络接口上的一些统计数据，比如接口上传输的字节数、报文数，错误或者丢弃的报文数等等</p>
+<pre><code>[root@ecs-centos-7 ~]# ip -s link
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    RX: bytes  packets  errors  dropped overrun mcast   
+    272        2        0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    272        2        0       0       0       0       
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:e0:4f:b8 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    47949      531      0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    50816      492      0       0       0       0       
+[root@ecs-centos-7 ~]# 
+</code></pre>
+<p>想查看更详细的信息可以使用 <code>ip -s -s link</code> 命令, 这个在排除网络故障时经常用到</p>
+<h3 id="小结"><font color="CornflowerBlue">小结</font></h3>
+<p>本文介绍了<code>ip</code>命令的常见用法，更多的用法请使用 <code>man ip</code>命令查看</p>
+
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2021-05-13 23:14</span>&nbsp;
+<a href="https://www.cnblogs.com/wanng/">Linux开发那些事儿</a>&nbsp;
+阅读(<span id="post_view_count">0</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=14762353" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(14762353);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="https://common.cnblogs.com/highlight/10.3.1/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 591012, cb_blogApp = 'wanng', cb_blogUserGuid = '23229085-2c8c-4027-9ea1-08d7d2f044e4';
+    var cb_entryId = 14762353, cb_entryCreatedDate = '2021-05-13 23:14', cb_postType = 1;
+    updatePostStats(
+        [cb_entryId],
+        function(id, count) { $("#post_view_count").text(count) },
+        function(id, count) { $("#post_comment_count").text(count) })
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+</script>
+<a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="cnblogs_c2" class="under-post-card">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+       var commentManager = new blogCommentManager();
+       commentManager.renderComments(0);
+       fixPostBody();
+       deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);       deliverT2();
+       deliverC1C2();
+       loadNewsAndKb();
+       loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);       LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+       GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+       loadOptUnderPost();
+       GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2021 Linux开发那些事儿
+<br /><span id="poweredby">Powered by .NET 5.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8L-rpLgFVEJMgssCVvNUAjsJuiwO4udr_Mp465_WvodnryQYU5rjtzCYkX6Hs2gzIV51J63MjDdzUcnaoWCo9F1t_LVIcdsk4-WhG5adbzcz8YoAKPn2LovH8Xk98FNmMurzkEzzhpdvcSR3mIvYfV8" />
+</body>
+</html>
